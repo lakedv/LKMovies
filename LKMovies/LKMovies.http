@@ -1,0 +1,6 @@
+@LKMovies_HostAddress = http://localhost:5226
+
+GET {{LKMovies_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
