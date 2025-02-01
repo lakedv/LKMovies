@@ -40,11 +40,6 @@ namespace LKMovies.Repositories
             return await _db.Categories.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<Category> GetByName(string name)
-        {
-            return await _db.Categories.FirstOrDefaultAsync(c => c.Name == name);
-        }
-
         public async Task<Category> Update(int id, Category category)
         {
             if (await _db.Categories.Where(c => c.Id == id).AsNoTracking().FirstOrDefaultAsync() == null)

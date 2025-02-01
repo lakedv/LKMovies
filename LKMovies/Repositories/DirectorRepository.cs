@@ -1,43 +1,65 @@
-﻿using LKMovies.Models;
+﻿using Humanizer.Localisation;
+using LKMovies.Data;
+using LKMovies.Models;
 using LKMovies.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LKMovies.Repositories
 {
     public class DirectorRepository : IDirectorRepository
     {
-        public Task<Director> Add(Director director)
+        private readonly LKMoviesContext _db;
+        public DirectorRepository(LKMoviesContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
+        }
+        public async Task<Director> Add(Director director)
+        {
+            if (director == null) throw new ArgumentNullException(nameof(director));
+            await _db.Directors.AddAsync(director);
+            await _db.SaveChangesAsync();
+            return director;
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            var director = await _db.Directors.FirstOrDefaultAsync(d => d.Id == id);
+            if (director == null) return false;
+            _db.Directors.Remove(director);
+            await _db.SaveChangesAsync();
+            return true;
         }
 
-        public Task<IEnumerable<Director>> GetAll()
+        public async Task<IEnumerable<Director>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.Directors.ToListAsync();
         }
 
-        public Task<IEnumerable<Director>> GetById(int id)
+        public async Task<Director> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _db.Directors.FirstOrDefaultAsync(d => d.Id == id);
         }
 
-        public Task<Director> GetByLastName(string LastName)
+        public async Task<Director> GetByLastName(string LastName)
         {
-            throw new NotImplementedException();
+            return await _db.Directors.FirstOrDefaultAsync(l => l.LastName == LastName);
         }
 
-        public Task<Director> GetByName(string FirstName)
+        public async Task<Director> GetByName(string FirstName)
         {
-            throw new NotImplementedException();
+            return await _db.Directors.FirstOrDefaultAsync(f => f.FirstName == FirstName);
         }
 
-        public Task<Director> Update(int id, Director director)
+        public async Task<Director> Update(int id, Director director)
         {
-            throw new NotImplementedException();
+            if (await _db.Directors.Where(d => d.Id == id).AsNoTracking().FirstOrDefaultAsync() == null)
+            {
+                throw new Exception("Director not Found.");
+            }
+
+            _db.Directors.Update(director);
+            await _db.SaveChangesAsync();
+            return director;
         }
     }
 }

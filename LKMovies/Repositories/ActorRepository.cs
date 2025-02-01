@@ -20,7 +20,7 @@ namespace LKMovies.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Actor>> GetById(int id)
+        public Task<Actor> GetById(int id)
         {
             throw new NotImplementedException();
         }

@@ -25,11 +25,6 @@ namespace LKMovies.Services
             throw new NotImplementedException();
         }
 
-        public Task<Genre> GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<Genre> Update(int id, Genre genre)
         {
             throw new NotImplementedException();

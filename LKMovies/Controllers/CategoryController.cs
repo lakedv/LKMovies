@@ -1,11 +1,12 @@
-﻿using LKMovies.Services.Interfaces;
+﻿using LKMovies.Models;
+using LKMovies.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LKMovies.Controllers
 {
     public class CategoryController : Controller
-    {   
+    {
         private readonly ICategoryService _categoryService;
 
         public CategoryController(ICategoryService categoryService)
@@ -16,13 +17,14 @@ namespace LKMovies.Controllers
         // GET: CategoriesController
         public async Task<ActionResult> Index()
         {
-           return View(await _categoryService.GetAll());
+            //ViewBag.Name = "Nombrecualquiera";
+            return View(await _categoryService.GetAll());
         }
 
         // GET: CategoriesController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View(_categoryService.GetById(id));
+            return View(await _categoryService.GetById(id));
         }
 
         // GET: CategoriesController/Create
@@ -35,57 +37,62 @@ namespace LKMovies.Controllers
         // POST: CategoriesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(Category category)
         {
+
             try
             {
+                await _categoryService.Add(category);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(category);
             }
         }
 
         // GET: CategoriesController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            return View(await _categoryService.GetById(id));
         }
 
         // POST: CategoriesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, Category category)
         {
             try
             {
+                await _categoryService.Update(id, category);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(category);
             }
         }
 
         // GET: CategoriesController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            return View(await _categoryService.GetById(id));
         }
 
         // POST: CategoriesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ActionName("Delete")]
+        public async Task<ActionResult> DoDelete(int id)
         {
             try
             {
+                await _categoryService.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(await _categoryService.GetById(id));
             }
         }
     }

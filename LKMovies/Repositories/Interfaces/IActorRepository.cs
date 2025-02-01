@@ -4,7 +4,7 @@ namespace LKMovies.Repositories.Interfaces
     public interface IActorRepository
     {
         public Task<IEnumerable<Actor>> GetAll();
-        public Task<IEnumerable<Actor>> GetById(int id);
+        public Task<Actor> GetById(int id);
         public Task<Actor> GetByName(string FirstName);
         public Task<Actor> GetByLastName(string LastName);
         public Task<Actor> Add(Actor actor);

@@ -36,11 +36,6 @@ namespace LKMovies.Services
             return await _categoryRepository.GetById(id);
         }
 
-        public async Task<Category> GetByName(string name)
-        {
-            return await _categoryRepository.GetByName(name);
-        }
-
         public async Task<Category> Update(int id, Category category)
         {
             return await _categoryRepository.Update(id, category);
