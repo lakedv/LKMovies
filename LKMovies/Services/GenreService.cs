@@ -1,33 +1,44 @@
 ﻿using LKMovies.Models;
+using LKMovies.Repositories;
+using LKMovies.Repositories.Interfaces;
 using LKMovies.Services.Interfaces;
 
 namespace LKMovies.Services
 {
     public class GenreService : IGenreService
     {
-        public Task<Genre> Add(Genre genre)
+        private readonly IGenreRepository _genreRepository;
+
+        public GenreService(IGenreRepository genreRepository)
         {
-            throw new NotImplementedException();
+            _genreRepository = genreRepository ?? throw new ArgumentNullException(nameof(genreRepository));
+        }
+        public async Task<Genre> Add(Genre genre)
+        {
+            if (genre == null) throw new ArgumentNullException(nameof(genre));
+            if (string.IsNullOrWhiteSpace(genre.Name))
+                throw new ArgumentException("Name can not be empty", nameof(genre.Name));
+            return await _genreRepository.Add(genre);
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            return await _genreRepository.Delete(id);
         }
 
-        public Task<IEnumerable<Genre>> GetAll()
+        public async Task<IEnumerable<Genre>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _genreRepository.GetAll();
         }
 
-        public Task<Genre> GetById(int id)
+        public async Task<Genre> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _genreRepository.GetById(id);
         }
 
-        public Task<Genre> Update(int id, Genre genre)
+        public async Task<Genre> Update(int id, Genre genre)
         {
-            throw new NotImplementedException();
+            return await _genreRepository.Update(id, genre);
         }
     }
 }

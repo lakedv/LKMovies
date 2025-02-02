@@ -14,8 +14,19 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<LKMoviesContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
+//Category
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//Genre
+builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+//Actor
+builder.Services.AddScoped<IActorService, ActorService>();
+builder.Services.AddScoped<IActorRepository, ActorRepository>();
+//Director
+builder.Services.AddScoped<IDirectorService, DirectorService>();
+builder.Services.AddScoped<IDirectorRepository, DirectorRepository>();
+//Movie
 
 var app = builder.Build();
 

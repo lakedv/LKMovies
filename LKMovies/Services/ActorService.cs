@@ -1,43 +1,57 @@
 ﻿using LKMovies.Models;
+using LKMovies.Repositories;
+using LKMovies.Repositories.Interfaces;
 using LKMovies.Services.Interfaces;
+using System.IO;
 
 namespace LKMovies.Services
 {
     public class ActorService : IActorService
     {
-        public Task<Actor> Add(Actor actor)
+        private readonly IActorRepository _actorRepository;
+
+        public ActorService(IActorRepository actorRepository)
         {
-            throw new NotImplementedException();
+            _actorRepository = actorRepository ?? throw new ArgumentNullException(nameof(actorRepository));
+        }
+        public async Task<Actor> Add(Actor actor)
+        {
+            if (actor == null) throw new ArgumentNullException(nameof(actor));
+            if (string.IsNullOrWhiteSpace(actor.FirstName))
+                throw new ArgumentException("Name can not be empty", nameof(actor.FirstName));
+            if (string.IsNullOrWhiteSpace(actor.LastName))
+                throw new ArgumentException("Surname can not be empty", nameof(actor.LastName));
+            return await _actorRepository.Add(actor);
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            return await _actorRepository.Delete(id);
         }
 
-        public Task<IEnumerable<Actor>> GetAll()
+        public async Task<IEnumerable<Actor>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _actorRepository.GetAll();
         }
 
-        public Task<IEnumerable<Actor>> GetById(int id)
+        public async Task<Actor> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _actorRepository.GetById(id);
         }
 
-        public Task<Actor> GetByLastName(string LastName)
+        public async Task<Actor> GetByLastName(string LastName)
         {
-            throw new NotImplementedException();
+            return await _actorRepository.GetByLastName(LastName);
         }
 
-        public Task<Actor> GetByName(string FirstName)
+        public async Task<Actor> GetByName(string FirstName)
         {
-            throw new NotImplementedException();
+            return await _actorRepository.GetByName(FirstName);
         }
 
-        public Task<Actor> Update(int id, Actor actor)
+        public async Task<Actor> Update(int id, Actor actor)
         {
-            throw new NotImplementedException();
+            return await _actorRepository.Update(id, actor);
         }
     }
 }

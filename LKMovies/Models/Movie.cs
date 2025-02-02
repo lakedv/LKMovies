@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public int Year { get; set; }
         public string Synopsis { get; set; }
-        public decimal Score { get; set; }
+        public float Score { get; set; }
         public Category Category { get; set; }
         public Genre Genre { get; set; }
         public Director Director { get; set; }

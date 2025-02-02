@@ -1,43 +1,65 @@
-﻿using LKMovies.Models;
+﻿using LKMovies.Data;
+using LKMovies.Models;
 using LKMovies.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace LKMovies.Repositories
 {
     public class ActorRepository : IActorRepository
     {
-        public Task<Actor> Add(Actor actor)
+        private readonly LKMoviesContext _db;
+        public ActorRepository(LKMoviesContext db)
         {
-            throw new NotImplementedException();
+            _db = db;
+        }
+        public async Task<Actor> Add(Actor actor)
+        {
+            if (actor == null) throw new ArgumentNullException(nameof(actor));
+            await _db.Actors.AddAsync(actor);
+            await _db.SaveChangesAsync();
+            return actor;
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            var actor = await _db.Actors.FirstOrDefaultAsync(a => a.Id == id);
+            if (actor == null) return false;
+            _db.Actors.Remove(actor);
+            await _db.SaveChangesAsync();
+            return true;
         }
 
-        public Task<IEnumerable<Actor>> GetAll()
+        public async Task<IEnumerable<Actor>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.Actors.ToListAsync();
         }
 
-        public Task<Actor> GetById(int id)
+        public async Task<Actor> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _db.Actors.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public Task<Actor> GetByLastName(string LastName)
+        public async Task<Actor> GetByLastName(string LastName)
         {
-            throw new NotImplementedException();
+            return await _db.Actors.FirstOrDefaultAsync(l => l.LastName == LastName);
         }
 
-        public Task<Actor> GetByName(string FirstName)
+        public async Task<Actor> GetByName(string FirstName)
         {
-            throw new NotImplementedException();
+            return await _db.Actors.FirstOrDefaultAsync(f => f.FirstName == FirstName);
         }
 
-        public Task<Actor> Update(int id, Actor actor)
+        public async Task<Actor> Update(int id, Actor actor)
         {
-            throw new NotImplementedException();
+            if (await _db.Actors.Where(a => a.Id == id).AsNoTracking().FirstOrDefaultAsync() == null)
+            {
+                throw new Exception("Actor not Found.");
+            }
+
+            _db.Actors.Update(actor);
+            await _db.SaveChangesAsync();
+            return actor;
         }
     }
 }

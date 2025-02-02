@@ -1,43 +1,57 @@
-﻿using LKMovies.Models;
+﻿using Humanizer.Localisation;
+using LKMovies.Models;
+using LKMovies.Repositories;
+using LKMovies.Repositories.Interfaces;
 using LKMovies.Services.Interfaces;
 
 namespace LKMovies.Services
 {
     public class DirectorService : IDirectorService
     {
-        public Task<Director> Add(Director director)
+        private readonly IDirectorRepository _directorRepository;
+
+        public DirectorService(IDirectorRepository directorRepository)
         {
-            throw new NotImplementedException();
+            _directorRepository = directorRepository ?? throw new ArgumentNullException(nameof(directorRepository));
+        }
+        public async Task<Director> Add(Director director)
+        {
+            if (director == null) throw new ArgumentNullException(nameof(director));
+            if (string.IsNullOrWhiteSpace(director.FirstName))
+                throw new ArgumentException("Name can not be empty", nameof(director.FirstName));
+            if (string.IsNullOrWhiteSpace(director.LastName))
+                throw new ArgumentException("Surname can not be empty", nameof(director.LastName));
+            return await _directorRepository.Add(director);
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            return await _directorRepository.Delete(id);
         }
 
-        public Task<IEnumerable<Director>> GetAll()
+        public async Task<IEnumerable<Director>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _directorRepository.GetAll();
         }
 
-        public Task<IEnumerable<Director>> GetById(int id)
+        public async Task<Director> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _directorRepository.GetById(id);
         }
 
-        public Task<Director> GetByLastName(string LastName)
+        public async Task<Director> GetByLastName(string LastName)
         {
-            throw new NotImplementedException();
+            return await _directorRepository.GetByLastName(LastName);
         }
 
-        public Task<Director> GetByName(string FirstName)
+        public async Task<Director> GetByName(string FirstName)
         {
-            throw new NotImplementedException();
+            return await _directorRepository.GetByName(FirstName);
         }
 
-        public Task<Director> Update(int id, Director director)
+        public async Task<Director> Update(int id, Director director)
         {
-            throw new NotImplementedException();
+            return await _directorRepository.Update(id, director);
         }
     }
 }

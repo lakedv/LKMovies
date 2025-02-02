@@ -5,61 +5,61 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LKMovies.Controllers
 {
-    public class GenreController : Controller
+    public class DirectorController : Controller
     {
-        private readonly IGenreService _genreService;
-        public GenreController(IGenreService genreService)
+        private readonly IDirectorService _directorService;
+        public DirectorController(IDirectorService directorService)
         {
-            _genreService = genreService ?? throw new ArgumentNullException(nameof(genreService));
+            _directorService = directorService ?? throw new ArgumentNullException(nameof(directorService));
         }
-        // GET: GenreController
+        // GET: DirectorController
         public async Task<ActionResult> Index()
         {
-            return View(await _genreService.GetAll());
+            return View(await _directorService.GetAll());
         }
 
-        // GET: GenreController/Details/5
+        // GET: DirectorController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            return View(await _genreService.GetById(id));
+            return View(await _directorService.GetById(id));
         }
 
-        // GET: GenreController/Create
+        // GET: DirectorController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: GenreController/Create
+        // POST: DirectorController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Genre genre)
+        public async Task<ActionResult> Create(Director director)
         {
             try
-            {
-                await _genreService.Add(genre);
+            {   
+                await _directorService.Add(director);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View(genre);
+                return View(director);
             }
         }
 
-        // GET: GenreController/Edit/5
+        // GET: DirectorController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            return View(await _genreService.GetById(id));
+            return View(await _directorService.GetById(id));
         }
 
-        // POST: GenreController/Edit/5
+        // POST: DirectorController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, Genre genre)
+        public async Task<ActionResult> Edit(int id, Director director)
         {
             try
             {
-                await _genreService.Update(id, genre);
+                await _directorService.Update(id, director);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -68,13 +68,13 @@ namespace LKMovies.Controllers
             }
         }
 
-        // GET: GenreController/Delete/5
+        // GET: DirectorController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            return View(await _genreService.GetById(id));
+            return View(await _directorService.GetById(id));
         }
 
-        // POST: GenreController/Delete/5
+        // POST: DirectorController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
@@ -82,7 +82,7 @@ namespace LKMovies.Controllers
         {
             try
             {
-                await _genreService.Delete(id);
+                await _directorService.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
