@@ -4,10 +4,10 @@ namespace LKMovies.Repositories.Interfaces
 {
     public interface ICategoryRepository
     {
-        Task<IEnumerable<Category>> GetAll();
-        Task<Category> GetById(int id);
-        Task<Category> Add(Category category);
-        Task<Category> Update(int id, Category category);
-        Task<bool> Delete(int id);
+        public Task<IEnumerable<Category>> GetAll();
+        public Task<Category> GetById(int id);
+        public Task<Category> Add(Category category);
+        public Task<Category> Update(int id, Category category);
+        public Task<bool> Delete(int id);
     }
 }

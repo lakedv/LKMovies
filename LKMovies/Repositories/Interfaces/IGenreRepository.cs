@@ -4,10 +4,10 @@ namespace LKMovies.Repositories.Interfaces
 {
     public interface IGenreRepository
     {
-        Task<IEnumerable<Genre>> GetAll();
-        Task<Genre> GetById(int id);
-        Task<Genre> Add(Genre genre);
-        Task<Genre> Update(int id, Genre genre);
-        Task<bool> Delete(int id);
+        public Task<IEnumerable<Genre>> GetAll();
+        public Task<Genre> GetById(int id);
+        public Task<Genre> Add(Genre genre);
+        public Task<Genre> Update(int id, Genre genre);
+        public Task<bool> Delete(int id);
     }
 }
