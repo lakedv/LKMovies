@@ -25,9 +25,10 @@ namespace LKMovies.Controllers
         }
 
         // GET: MovieController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+           await _movieService.GetViewBagData(ViewBag);
+           return View();
         }
 
         // POST: MovieController/Create

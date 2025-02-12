@@ -10,5 +10,6 @@ namespace LKMovies.Services.Interfaces
         public Task<Movie> Add(Movie movie);
         public Task<Movie> Update(int id, Movie movie);
         public Task<bool> Delete(int id);
+        public Task GetViewBagData(dynamic viewBag);
     }
 }

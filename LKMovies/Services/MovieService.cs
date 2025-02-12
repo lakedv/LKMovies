@@ -86,6 +86,14 @@ namespace LKMovies.Services
         {
             return await _movieRepository.Update(id, movie);
         }
+
+        public async Task GetViewBagData(dynamic viewBag) 
+        {
+            viewBag.Categories = await _categoryService.GetAll();
+            viewBag.Directors = await _directorService.GetAll();
+            viewBag.Genres = await _genreService.GetAll();
+            viewBag.Actors = await _actorService.GetAll();
+        }
         /*public IActionResult Filter(Filter filter) 
         {
             var movie = _movieRepository.AsQueryable();
