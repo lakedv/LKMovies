@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Create";
+
+    IEnumerable<Category> categories = ViewBag.Categories;
+    IEnumerable<Genre> genres = ViewBag.Genres;
+    IEnumerable<Actor> actors = ViewBag.Actors;
+    IEnumerable<Director> directors = ViewBag.Directors;
 }
 
 <h1>Create</h1>
@@ -12,15 +17,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (ViewBag.Categories != null)
-            {
-                foreach (Category category in ViewBag.Categories)
-                {
-                {
-                    <p>@category.Name</p>
-                }
-            }
-            }
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
@@ -42,12 +38,40 @@
                 <span asp-validation-for="Score" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <label asp-for="Category" class="control-label"></label>
+                <select>
+                    @foreach (Category category in categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="DirectorId" class="control-label"></label>
-                <select asp-for="DirectorId" class ="form-control" asp-items="ViewBag.DirectorId"></select>
+                <label asp-for="Genres" class="control-label"></label>
+                <select>
+                    @foreach (Genre genre in genres)
+                    {
+                        <option value="@genre.Id">@genre.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Actors" class="control-label"></label>
+                <select>
+                    @foreach (Actor actor in actors)
+                    {
+                        <option value="@actor.Id">@actor.FirstName @actor.LastName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Director" class="control-label"></label>
+                <select>
+                    @foreach (Director director in directors)
+                    {
+                        <option value="@director.Id">@director.FirstName @director.LastName</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
