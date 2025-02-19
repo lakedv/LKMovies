@@ -38,8 +38,17 @@
                 <span asp-validation-for="Score" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Director" class="control-label"></label>
+                <select asp-for="DirectorId" class="form-control">
+                    @foreach (Director director in directors)
+                    {
+                        <option value="@director.Id">@director.FirstName @director.LastName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <select>
+                <select asp-for="CategoryId" class="form-control">
                     @foreach (Category category in categories)
                     {
                         <option value="@category.Id">@category.Name</option>
@@ -48,7 +57,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Genres" class="control-label"></label>
-                <select>
+                <select asp-for="GenresId" class="form-control">
                     @foreach (Genre genre in genres)
                     {
                         <option value="@genre.Id">@genre.Name</option>
@@ -57,19 +66,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Actors" class="control-label"></label>
-                <select>
+                <select asp-for="ActorsId" class="form-control">
                     @foreach (Actor actor in actors)
                     {
                         <option value="@actor.Id">@actor.FirstName @actor.LastName</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Director" class="control-label"></label>
-                <select>
-                    @foreach (Director director in directors)
-                    {
-                        <option value="@director.Id">@director.FirstName @director.LastName</option>
                     }
                 </select>
             </div>

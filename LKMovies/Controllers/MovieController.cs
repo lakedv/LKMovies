@@ -43,6 +43,7 @@ namespace LKMovies.Controllers
             }
             catch
             {
+                await _movieService.GetViewBagData(ViewBag);
                 return View(movie);
             }
         }
