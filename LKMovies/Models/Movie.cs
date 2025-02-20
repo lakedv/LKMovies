@@ -9,9 +9,9 @@
         public float Score { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public List<Genre> Genres { get; set; }
         public int DirectorId { get; set; }
         public Director Director { get; set; }
+        public List<Genre> Genres { get; set; }
         public List<Actor> Actors { get; set; }
     }
 }
