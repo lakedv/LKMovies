@@ -57,7 +57,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Genres" class="control-label"></label>
-                <select asp-for="GenresId" class="form-control">
+                <select asp-for="Genres" class="form-control">
                     @foreach (Genre genre in genres)
                     {
                         <option value="@genre.Id">@genre.Name</option>
@@ -66,7 +66,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Actors" class="control-label"></label>
-                <select asp-for="ActorsId" class="form-control">
+                <select asp-for="Actors" class="form-control">
                     @foreach (Actor actor in actors)
                     {
                         <option value="@actor.Id">@actor.FirstName @actor.LastName</option>

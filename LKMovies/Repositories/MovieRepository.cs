@@ -32,6 +32,7 @@ namespace LKMovies.Repositories
 
         public async Task<IEnumerable<Movie>> GetAll()
         {
+            _db.Movies.Include(m => m.Category).Include(m => m.Genres).Include(m => m.Director).Include(m => m.Actors).ToList();
             return await _db.Movies.ToListAsync();
         }
 
