@@ -1,8 +1,8 @@
 ﻿using LKMovies.Models;
 
-namespace LKMovies.ViewModels
+namespace LKMovies.ViewModels.Movies
 {
-    public class MovieViewModel
+    public class GetMovieViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

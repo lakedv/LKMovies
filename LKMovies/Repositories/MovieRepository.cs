@@ -32,15 +32,24 @@ namespace LKMovies.Repositories
 
         public async Task<IEnumerable<Movie>> GetAll()
         {
-            _db.Movies.Include(m => m.Category).Include(m => m.Genres).Include(m => m.Director).Include(m => m.Actors).ToList();
+            _db.Movies.Include(m => m.Category)
+                .Include(m => m.Genres)
+                .Include(m => m.Director)
+                .Include(m => m.Actors)
+                .ToList();
             return await _db.Movies.ToListAsync();
         }
 
         public async Task<Movie> GetById(int id)
         {
+            _db.Movies.Include(m => m.Category)
+                .Include(m => m.Genres)
+                .Include(m => m.Director)
+                .Include(m => m.Actors)
+                .ToList();
             return await _db.Movies.FirstOrDefaultAsync(m => m.Id == id);
         }
-
+        
         public async Task<Movie> Update(int id, Movie movie)
         {
             if (await _db.Movies.Where(g => g.Id == id).AsNoTracking().FirstOrDefaultAsync() == null)

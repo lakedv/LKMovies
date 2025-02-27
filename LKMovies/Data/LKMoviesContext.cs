@@ -16,6 +16,5 @@ namespace LKMovies.Data
         public LKMoviesContext(DbContextOptions options) :
             base(options)
         { }
-        public DbSet<LKMovies.ViewModels.MovieViewModel> MovieViewModel { get; set; } = default!;
     }
 }

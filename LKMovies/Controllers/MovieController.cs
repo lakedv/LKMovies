@@ -1,5 +1,6 @@
 ﻿using LKMovies.Models;
 using LKMovies.Services.Interfaces;
+using LKMovies.ViewModels.Movies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,14 +35,14 @@ namespace LKMovies.Controllers
         // POST: MovieController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Movie movie)
+        public async Task<ActionResult> Create(CreateMovieViewModel movie)
         {
             try
             {
                 await _movieService.Add(movie);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
                 await _movieService.GetViewBagData(ViewBag);
                 return View(movie);

@@ -6,7 +6,7 @@ using LKMovies.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq;
-using LKMovies.ViewModels;
+using LKMovies.ViewModels.Movies;
 
 namespace LKMovies.Services
 {
@@ -27,11 +27,31 @@ namespace LKMovies.Services
             _directorService = directorService ?? throw new ArgumentNullException(nameof(directorService));
 
         }
-        public async Task<Movie> Add(Movie movie)
+        public async Task<Movie> Add(CreateMovieViewModel movieViewModel)
         {
-            if (movie == null) throw new ArgumentNullException(nameof(movie));
-            if (string.IsNullOrWhiteSpace(movie.Title))
-                throw new ArgumentException("Title can not be empty", nameof(movie.Title));
+            if (movieViewModel == null) throw new ArgumentNullException(nameof(movieViewModel));
+            if (string.IsNullOrWhiteSpace(movieViewModel.Title))
+                throw new ArgumentException("Title can not be empty", nameof(movieViewModel.Title));
+            Movie movie = new Movie
+            {
+                Title = movieViewModel.Title,
+                Year = movieViewModel.Year,
+                Synopsis = movieViewModel.Synopsis,
+                Score = movieViewModel.Score,
+                DirectorId = movieViewModel.DirectorId,
+                CategoryId = movieViewModel.CategoryId,
+                Genres = new List<Genre>(),
+                Actors = new List<Actor>()
+            };
+            foreach (int actorId in movieViewModel.SelectedActors)
+            {
+                movie.Actors.Add(await _actorService.GetById(actorId));
+            }
+            foreach (int genreId in movieViewModel.SelectedGenres)
+            {
+                movie.Genres.Add(await _genreService.GetById(genreId));
+            }
+
             return await _movieRepository.Add(movie);
         }
 
@@ -40,14 +60,14 @@ namespace LKMovies.Services
             return await _movieRepository.Delete(id);
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetAll()
+        public async Task<IEnumerable<GetMovieViewModel>> GetAll()
         {
             IEnumerable<Movie> movies = await _movieRepository.GetAll();
-            ICollection<MovieViewModel> viewModels = new List<MovieViewModel>();
+            ICollection<GetMovieViewModel> viewModels = new List<GetMovieViewModel>();
 
             foreach (Movie movie in movies)
             {
-                MovieViewModel viewModel = new MovieViewModel();
+                GetMovieViewModel viewModel = new GetMovieViewModel();
                 viewModel.Title = movie.Title;
                 viewModel.Id = movie.Id;
                 viewModel.Synopsis = movie.Synopsis;
@@ -65,19 +85,19 @@ namespace LKMovies.Services
             return viewModels;
         }
 
-        public async Task<MovieViewModel> GetById(int id)
+        public async Task<GetMovieViewModel> GetById(int id)
         {
             Movie movie = await _movieRepository.GetById(id);
-            MovieViewModel viewModel = new MovieViewModel();
+            GetMovieViewModel viewModel = new GetMovieViewModel();
             viewModel.Title = movie.Title;
             viewModel.Id = movie.Id;
             viewModel.Synopsis = movie.Synopsis;
             viewModel.Score = movie.Score;
             viewModel.Year = movie.Year;
-            viewModel.Director = $"{movie.Director.FirstName} {movie.Director.LastName}";
-            viewModel.Actors = string.Join(", ", movie.Actors.Select(a => $"{a.FirstName} {a.LastName}"));
-            viewModel.Category = movie.Category.Name;
-            viewModel.Genres = string.Join(", ", movie.Genres.Select(g => g.Name));
+            viewModel.Director = $"{movie.Director?.FirstName} {movie.Director?.LastName}";
+            viewModel.Actors = string.Join(", ", movie.Actors?.Select(a => $"{a.FirstName} {a.LastName}"));
+            viewModel.Category = movie.Category?.Name;
+            viewModel.Genres = string.Join(", ", movie.Genres?.Select(g => g.Name));
             
             return viewModel;
         }
