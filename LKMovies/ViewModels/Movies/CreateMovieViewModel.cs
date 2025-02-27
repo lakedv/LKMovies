@@ -9,8 +9,8 @@ namespace LKMovies.ViewModels.Movies
         public int Year { get; set; }
         public string Synopsis { get; set; }
         public float Score { get; set; }
-        public int CategoryId { get; set; }
-        public int DirectorId { get; set; }
+        public int? CategoryId { get; set; }
+        public int? DirectorId { get; set; }
         public Director Director { get; set; }
         public List<int> SelectedGenres { get; set; }
         public List<int> SelectedActors { get; set; }

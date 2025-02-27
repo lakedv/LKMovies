@@ -73,10 +73,10 @@ namespace LKMovies.Services
                 viewModel.Synopsis = movie.Synopsis;
                 viewModel.Score = movie.Score;
                 viewModel.Year = movie.Year;
-                viewModel.Director = $"{movie.Director.FirstName} {movie.Director.LastName}";
-                viewModel.Actors = string.Join(", ", movie.Actors.Select(a => $"{a.FirstName} {a.LastName}"));
-                viewModel.Category = movie.Category.Name;
-                viewModel.Genres = string.Join(", ", movie.Genres.Select(g => g.Name));
+                viewModel.Director = $"{movie.Director?.FirstName} {movie.Director?.LastName}";
+                viewModel.Actors = string.Join(", ", movie.Actors?.Select(a => $"{a.FirstName} {a.LastName}"));
+                viewModel.Category = movie.Category?.Name;
+                viewModel.Genres = string.Join(", ", movie.Genres?.Select(g => g.Name));
 
 
                 viewModels.Add(viewModel);
@@ -113,6 +113,23 @@ namespace LKMovies.Services
             viewBag.Directors = await _directorService.GetAll();
             viewBag.Genres = await _genreService.GetAll();
             viewBag.Actors = await _actorService.GetAll();
+        }
+
+        public async Task<CreateMovieViewModel> GetForEdit(int id)
+        {
+            Movie Movie = await _movieRepository.GetById(id);
+            CreateMovieViewModel viewModel = new CreateMovieViewModel();
+            viewModel.Title = Movie.Title;
+            viewModel.Id = Movie.Id;
+            viewModel.Synopsis = Movie.Synopsis;
+            viewModel.Score = Movie.Score;
+            viewModel.Year = Movie.Year;
+            viewModel.DirectorId = Movie.DirectorId;
+            viewModel.SelectedActors = Movie.Actors.Select(a => a.Id).ToList();
+            viewModel.CategoryId = Movie.CategoryId;
+            viewModel.SelectedGenres = Movie.Genres.Select(g => g.Id).ToList();
+
+            return viewModel;
         }
         /*public IActionResult Filter(Filter filter) 
         {
