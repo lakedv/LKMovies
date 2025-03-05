@@ -53,11 +53,18 @@ namespace LKMovies.Repositories
         
         public async Task<Movie> Update(int id, Movie movie)
         {
-            if (await _db.Movies.Where(g => g.Id == id).AsNoTracking().FirstOrDefaultAsync() == null)
+            Movie? _movie = await _db.Movies
+                .Include(a => a.Actors)
+                .Include(g => g.Genres)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if(_movie == null)
             {
                 throw new Exception("Movie not Found.");
             }
-            _db.Movies.Update(movie);
+
+            _movie.Actors = new List<Actor>(movie.Actors!);
+            _movie.Genres = new List<Genre>(movie.Genres!);
+
             await _db.SaveChangesAsync();
             return movie;
         }
