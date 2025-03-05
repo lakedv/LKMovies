@@ -1,7 +1,22 @@
-﻿namespace LKMovies.Models
+﻿using LKMovies.ViewModels.Movies;
+
+namespace LKMovies.Models
 {
     public class Movie
     {
+        public Movie() { }
+        public Movie(CreateMovieViewModel movieViewModel)
+        {
+            Id = movieViewModel.Id;
+            Title = movieViewModel.Title;
+            Year = movieViewModel.Year;
+            Synopsis = movieViewModel.Synopsis;
+            Score = movieViewModel.Score;
+            DirectorId = movieViewModel.DirectorId;
+            CategoryId = movieViewModel.CategoryId;
+            Genres = new List<Genre>();
+            Actors = new List<Actor>();
+        }
         public int Id { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }

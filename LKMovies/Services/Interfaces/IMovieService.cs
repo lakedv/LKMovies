@@ -9,7 +9,7 @@ namespace LKMovies.Services.Interfaces
         public Task<GetMovieViewModel> GetById(int id);
         public Task<CreateMovieViewModel> GetForEdit(int id);
         public Task<Movie> Add(CreateMovieViewModel movieViewModel);
-        public Task<Movie> Update(int id, Movie movie);
+        public Task<Movie> Update(int id, CreateMovieViewModel movie);
         public Task<bool> Delete(int id);
         public Task GetViewBagData(dynamic viewBag);
     }

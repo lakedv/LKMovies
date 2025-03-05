@@ -1,5 +1,6 @@
 ﻿using LKMovies.Data;
 using LKMovies.Models;
+using LKMovies.ViewModels.Movies;
 using LKMovies.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

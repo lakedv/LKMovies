@@ -52,22 +52,24 @@ namespace LKMovies.Controllers
         // GET: MovieController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            return View(await _movieService.GetById(id));
+            await _movieService.GetViewBagData(ViewBag);
+            return View(await _movieService.GetForEdit(id));
         }
 
         // POST: MovieController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, Movie movie)
+        public async Task<ActionResult> Edit(int id, CreateMovieViewModel movie)
         {
             try
             {
                 await _movieService.Update(id, movie);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                await _movieService.GetViewBagData(ViewBag);
+                return View(movie);
             }
         }
 

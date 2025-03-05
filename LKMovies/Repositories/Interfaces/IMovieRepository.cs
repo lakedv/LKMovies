@@ -1,4 +1,5 @@
 ﻿using LKMovies.Models;
+using LKMovies.ViewModels.Movies;
 
 namespace LKMovies.Repositories.Interfaces
 {
